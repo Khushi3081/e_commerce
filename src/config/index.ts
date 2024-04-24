@@ -1,12 +1,12 @@
-import { DEFAULT_ENVIRONMENT } from '@/helper/common.helper';
 import { config } from 'dotenv';
-config({ path: `.env.${DEFAULT_ENVIRONMENT}` });
+config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
 export const {
     API_PORT,
     DATABASE_URL,
     DATABASE_USERNAME,
-    DATABASE_PASSWORD
+    DATABASE_PASSWORD,
+    NODE_ENV
 } = process.env
 
     

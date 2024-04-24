@@ -5,6 +5,8 @@ export interface ProductsAttributes {
   description: string;
   category_uuid: string;
   images: string;
+  price:string;
+  Quantity:number;
   created_at: number;
   updated_at: number;
   deleted_at: number;

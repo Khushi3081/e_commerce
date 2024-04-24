@@ -1,9 +1,9 @@
 {
-  "development": {
-    "username": "root",
-    "password": "Khushi#123",
-    "database": "demo_development",
-    "host": "localhost",
-    "dialect": "mysql"
-  }
+    "development": {
+      "username": "root",
+      "password": "Khushi#123",
+      "database": "demo_development",
+      "host": "localhost",
+      "dialect": "mysql"
+    }
 }

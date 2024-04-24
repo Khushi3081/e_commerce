@@ -6,5 +6,6 @@ module.exports = {
   config: path.resolve(path.join(process.cwd(), 'sequelize'), 'config.json'),
   'seeders-path': path.resolve(path.join(process.cwd(), 'sequelize'), 'seeders'),
   'migrations-path': path.resolve(path.join(process.cwd(), 'sequelize'), 'migrations'),
+  // 'model-path': path.resolve(path.join(process.cwd(), 'src'), 'models'),
 };
 // module.exports = config;

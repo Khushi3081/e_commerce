@@ -6,7 +6,8 @@ import { IncomingMessage, Server, ServerResponse } from 'http';
 import http from 'http';
 import { DEFAULT_ENVIRONMENT } from './helper/common.helper';
 import { Routes } from './interface/routes.interface';
-import { API_PORT } from './config';
+import { API_PORT, NODE_ENV } from './config';
+
 export default class App {
   readonly app: express.Application;
   readonly env: string;
@@ -15,7 +16,7 @@ export default class App {
   constructor(data: { apiRoutes: Routes[]; generalRoutes: Routes[] }) {
     this.app = express();
 
-    this.env =  DEFAULT_ENVIRONMENT;
+    this.env = NODE_ENV || 'development';
     this.API_PORT = API_PORT || 3000;
 
     this.initializeMiddlewares();
@@ -32,7 +33,7 @@ export default class App {
     this.app.use(cors());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
-    if (DEFAULT_ENVIRONMENT) {
+    if (NODE_ENV === 'development') {
       this.app.use(
         session({
           cookie: {

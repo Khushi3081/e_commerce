@@ -1,15 +1,25 @@
-import { DATABASE_URL } from '@/config';
 import fs from 'fs';
 import path from 'path';
+import { DATABASE_URL } from '@/config';
 import { ModelCtor, Sequelize } from 'sequelize-typescript';
 
 let db: Sequelize;
 
 const initSequelize = () => {
   const _basename = path.basename(module.filename);
-  const sequelize = new Sequelize(DATABASE_URL, {
-    dialect: 'mysql',
-  });
+  const sequelize = new Sequelize(
+    {
+      "username": "root",
+      "password": "Khushi#123",
+      "database": "demo_development",
+      "host": "localhost",
+      "dialect": "mysql"
+    }
+);
+  sequelize
+    .authenticate()
+    .then(() => console.log(`Successfully Connected Database`))
+    .catch((err) => console.log(`Something Went Wrong with connection ${err.message}`));
 
   const _models = fs
     .readdirSync(__dirname)

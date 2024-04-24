@@ -36,17 +36,18 @@ export default class Category extends Model<CategoryAttributes, RequiredCategory
   image: string;
 
   @CreatedAt
-  created_at: Date;
+  created_at:Date;
 
   @UpdatedAt
-  updated_at: Date;
+  updated_at:Date;
 
   @DeletedAt
-  deleted_at: Date;
+  deleted_at:Date;
 
   readonly toJSON = () => {
     const values = Object.assign({}, this.get());
     // delete values.password;
     return values;
   };
+  
 }
