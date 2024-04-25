@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  addProductToCart,
   getAllCategory,
   getCategoriesWiseProducts,
   getProductListing,
@@ -7,7 +8,8 @@ import {
 import FiltersModalData from "component/FilterModal";
 import Productcard from "component/Productcard";
 import { ProductDetailsPageType } from "./types/dashboard.type";
-import { ApiParamsType } from "hepler/common.helper";
+import { ApiParamsType, ResponseType } from "hepler/common.helper";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [categoryList, setCategoryList] = useState<string[]>([]);
@@ -21,7 +23,7 @@ const Dashboard = () => {
     count: 0,
     page: 1,
   });
-
+const navigate = useNavigate()
   useEffect(() => {
     getProductData();
   }, [priceRange, oneCategory, apiParams.count, apiParams.page]);
@@ -50,6 +52,13 @@ const Dashboard = () => {
     }
   };
 
+  const handleAddToCart = async(product:ProductDetailsPageType)=>{
+    const result =  await addProductToCart(product)
+    if(result?.data?.responseType === ResponseType.Success ){
+      window.alert("Added to cart to successfully")
+    }
+    
+  }
   return (
     <div>
       <button
@@ -59,10 +68,19 @@ const Dashboard = () => {
       >
         Choose Filter
       </button>
+      <button
+      style={{marginLeft:"20px"}}
+        type="button"
+        onClick={()=>navigate("/cart")}
+        className="btn btn-success"
+      >
+        Show Cart
+      </button>
       <div>
         {productsofCategory && productsofCategory.length>0 ? (
           <Productcard
             data={productsofCategory}
+            handleCart={(product)=>handleAddToCart(product)}
           />
         ):
         <h3>Data not found</h3>}

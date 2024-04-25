@@ -5,7 +5,7 @@ const Home = () => {
     return (
    <div className="container">
       <div className="text-center" style={{marginTop:"60px"}}>
-        <button className="btn btn-primary" onClick={()=>navigate("../Dashboard")}>Let's start the Shopping</button>
+        <button className="btn btn-primary" onClick={()=>navigate("../dsashboard")}>Let's start the Shopping</button>
       </div>
     </div>
   )
