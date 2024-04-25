@@ -13,7 +13,7 @@ export default class Category extends Model<CategoryAttributes, RequiredCategory
     allowNull: false,
     type: DataTypes.INTEGER,
   })
-  uuid: string;
+  uuid: number;
 
   @Column({
     allowNull: false,

@@ -4,24 +4,33 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.sequelize.transaction(async (t) => {
-      await queryInterface.createTable('products', {
-        uuid: { type: Sequelize.INTEGER, allowNull: false, primaryKey: true },
-        category_uuid: {
+      await queryInterface.createTable('productsCart', {
+        uuid: { type: Sequelize.INTEGER, allowNull: false, primaryKey: true,autoIncrement :true },
+        product_uuid: {
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {
-            model: 'category',
+            model: 'products',
             key: 'uuid',
           },
         },
-        title: { type: Sequelize.STRING, allowNull: false },
         price: {
           type: Sequelize.STRING,
-          allowNull: false
+          allowNull: false,
         },
-        description: { type: Sequelize.TEXT, allowNull: false },
-        images: { type: Sequelize.STRING, allowNull: false },
-        Quantity:{type:Sequelize.INTEGER,allowNull:false,defaultValue:1},
+        quantity: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
+        total_price: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        payment_done: {
+          type: Sequelize.ENUM('PENDING', 'COMPLETED'),
+          allowNull: false,
+          defaultValue: 'PENDING',
+        },
         created_at: {
           type: Sequelize.DATE,
           allowNull: false,
@@ -37,9 +46,9 @@ module.exports = {
     });
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.sequelize.transaction(async (t) => {
-      await queryInterface.dropTable('products', { transaction: t });
+      await queryInterface.dropTable('productsCart', { transaction: t });
     });
-  }
+  },
 };

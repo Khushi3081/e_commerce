@@ -1,57 +1,41 @@
 import {
+  AutoIncrement,
   BelongsTo,
-  BelongsToMany,
   Column,
   CreatedAt,
   DeletedAt,
+  ForeignKey,
   HasMany,
-  HasOne,
   Model,
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
-import Category from './category.model';
-import { ProductsAttributes, RequiredProductsAttributes } from './interface/product.interface';
+import { ProductsCartAttribute, RequiredProductsCartAttributes } from './interface/productCart.interface';
+import Products from './product.model';
 
 @Table({
   timestamps: true,
   paranoid: true,
-  tableName: 'products',
+  tableName: 'productsCart',
 })
-export default class Products extends Model<ProductsAttributes, RequiredProductsAttributes> {
+export default class ProductsCart extends Model<ProductsCartAttribute, RequiredProductsCartAttributes> {
   @Column({
     primaryKey: true,
     allowNull: false,
     type: DataTypes.INTEGER,
+    autoIncrement:true
   })
   uuid: number;
 
+  @ForeignKey(() => Products)
   @Column({
     allowNull: false,
-    type: DataTypes.STRING,
-  })
-  title: string;
-
-  @Column({
-    type: DataTypes.TEXT,
-    allowNull: false,
-  })
-  description: string;
-
-  @Column({
-    allowNull: true,
     type: DataTypes.UUID,
   })
-  category_uuid: string;
-  @BelongsTo(() => Category, 'category_uuid')
-  category: Category;
-
-  @Column({
-    type: DataTypes.STRING,
-    allowNull: true,
-  })
-  images: string;
+  product_uuid: string;
+  @BelongsTo(() => Products, 'product_uuid')
+  product: Products;
 
   @Column({
     type: DataTypes.STRING,
@@ -63,15 +47,17 @@ export default class Products extends Model<ProductsAttributes, RequiredProducts
     type: DataTypes.INTEGER,
     allowNull: false,
   })
-  Quantity: number;
+  quantity: number;
 
   @Column({
-    type:DataTypes.BOOLEAN,
-    allowNull:false,
-    defaultValue:false
+    type: DataTypes.STRING,
+    allowNull: true,
   })
-  addedToCart:boolean
+  total_price: string;
 
+  @Column({
+    type: DataTypes.ENUM('PENDING', 'COMPLETED'),
+  })
   @CreatedAt
   created_at: Date;
 

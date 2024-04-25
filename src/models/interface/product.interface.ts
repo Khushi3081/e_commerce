@@ -7,6 +7,7 @@ export interface ProductsAttributes {
   images: string;
   price:string;
   Quantity:number;
+  addedToCart:boolean;
   created_at: number;
   updated_at: number;
   deleted_at: number;
