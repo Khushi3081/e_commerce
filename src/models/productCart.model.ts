@@ -57,7 +57,10 @@ export default class ProductsCart extends Model<ProductsCartAttribute, RequiredP
 
   @Column({
     type: DataTypes.ENUM('PENDING', 'COMPLETED'),
+    allowNull:false
   })
+  payment_done:string
+  
   @CreatedAt
   created_at: Date;
 

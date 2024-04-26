@@ -70,13 +70,12 @@ export class CartProductsController {
 
   public readonly paymentCartData = async (req: Request, res: Response, next: NextFunction) => {
     try {
-                
       const payment = await ProductsCart.update(
         {
-          quantity: req.body.data.quantity - 1,
+          payment_done: 'COMPLETED',
+          quantity: req.body.data.quantity,
           price: req.body.data.price,
           total_price: req.body.data.price * req.body.data.quantity,
-          payment_done: 'COMPLETED',
         },
         {
           where: {
@@ -84,7 +83,7 @@ export class CartProductsController {
           },
         },
       );
-      return generalResponse(res, '', 'Payment done succesfully', 'success', false, 200);
+      return generalResponse(res,req.body.data.uuid , 'Payment done succesfully', 'success', false, 200);
     } catch (error) {
       return generalResponse(res, error.message, 'Something Went Wrong!', 'failed', false, 400);
     }
