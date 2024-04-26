@@ -61,8 +61,8 @@ export const categoryData = [
   ];
 
 export const ResponseType= {
-  Failed:"Failed",
-  Success:"Success"
+  Failed:"failed",
+  Success:"success"
 }
 
 export type ApiParamsType = {

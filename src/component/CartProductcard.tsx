@@ -4,13 +4,17 @@ import Card from 'react-bootstrap/Card';
 import { REACT_APP_IMAGE_PATH } from "config";
 import { cartData } from 'Pages/Cart/types/cart.types';
 
-const CartProductcard: React.FC<{ data: cartData[];addQuantity:(uuid:number,quantity:number,price:string) => void; removeQuantity:(uuid:number,quantity:number,price:string) => void;payment:(cartProduct:cartData) => void;donePayment:boolean }> = ({data,addQuantity,removeQuantity,payment,donePayment}) => {
+const CartProductcard: React.FC<{ data: cartData[];addQuantity:(uuid:number,quantity:number,price:string) => void; removeQuantity:(uuid:number,quantity:number,price:string) => void;payment:(cartProduct:cartData) => void;donePayment:{[key:string]:boolean}; }> = ({data,addQuantity,removeQuantity,payment,donePayment}) => {
  
   return (
     <Row lg={4}>
     
     {data &&
       data.map((cartProduct,index) => {
+        let id:string = String(cartProduct.uuid)
+        const res = Object.keys(donePayment).includes(id)
+        const res2 = cartProduct.payment_done==="COMPLETED" ? true:false
+        
         return (
           <Col className="d-flex m-3">
             <Card className="flex-fill" key={index}>
@@ -22,9 +26,9 @@ const CartProductcard: React.FC<{ data: cartData[];addQuantity:(uuid:number,quan
                 <Card.Text>Quantity:{" "}{cartProduct.quantity}</Card.Text>
                 <Card.Text>TotalPrice:{" "}{cartProduct.total_price}</Card.Text>
                 <Button variant="primary" onClick={()=>addQuantity(cartProduct.uuid,cartProduct.quantity,cartProduct.price)}>Add +</Button>
-                <Button variant="primary" style={{marginLeft:"5px"}} onClick={()=>removeQuantity(cartProduct.uuid,cartProduct.quantity,cartProduct.price)}>Remove -</Button>
+                <Button variant="primary" style={{marginLeft:"5px"}} onClick={()=>removeQuantity(cartProduct.uuid,cartProduct.quantity,cartProduct.price)} disabled={cartProduct.quantity === 0 ?true:false}>Remove -</Button>
                 <Card.Text style={{marginTop:"10px"}}>
-                <Button variant="success" onClick={()=>payment(cartProduct)} disabled={donePayment}>Payment</Button>
+                <Button variant="success" onClick={()=>payment(cartProduct)} disabled={res || res2}>Payment</Button>
                 </Card.Text>
               
               </Card.Body>
